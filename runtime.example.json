@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "archive_root": "C:\\path\\to\\mail-organizer\\real-mail",
+  "state_dir": "C:\\path\\to\\mail-organizer\\.runtime",
+  "interval_seconds": 900,
+  "subprocess_timeout_seconds": 210,
+  "accounts": [
+    {
+      "id": "gmail-1",
+      "enabled": true,
+      "max_messages": 100,
+      "query": "",
+      "folder": "inbox",
+      "client_id": null,
+      "gmail_mode": "incremental",
+      "include_spam_trash": true,
+      "workers": 4,
+      "time_budget_seconds": 60
+    },
+    {
+      "id": "gmail-2",
+      "enabled": true,
+      "max_messages": 100,
+      "query": "",
+      "folder": "inbox",
+      "client_id": null,
+      "gmail_mode": "incremental",
+      "include_spam_trash": true,
+      "workers": 4,
+      "time_budget_seconds": 60
+    },
+    {
+      "id": "outlook-1",
+      "enabled": false,
+      "max_messages": 100,
+      "query": "",
+      "folder": "inbox",
+      "client_id": null
+    }
+  ],
+  "backfill_pause_seconds": 2,
+  "backfill_retry_seconds": 60,
+  "auto_prepare": true,
+  "preparation_interval_seconds": 900,
+  "preparation_timeout_seconds": 300
+}
