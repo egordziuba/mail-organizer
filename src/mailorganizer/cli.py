@@ -250,11 +250,16 @@ def _sync(args):
     return {"status":"bounded_readonly_scan_finished", "account_id":args.account, **status, "calendar_modified":False}
 
 
+def _archive_lock(identity):
+    """Real archive lock; synthetic tests may explicitly replace this factory."""
+    from .runtime import NamedMutex
+    return NamedMutex(identity)
+
+
 def _dispatch(args):
     # Archive construction can replay complete orphan originals into SQLite, even on report.
     if args.command in {"sync", "demo", "import-eml", "report", "prepare", "tasks", "validate-results"}:
-        from .runtime import NamedMutex
-        with NamedMutex(args.root.resolve() / "archive-writer"):
+        with _archive_lock(args.root.resolve() / "archive-writer"):
             return _dispatch_unlocked(args)
     return _dispatch_unlocked(args)
 

@@ -1,6 +1,9 @@
+from conftest import windows_only
+
 import xml.etree.ElementTree as ET
 
 
+@windows_only
 def test_windows_task_is_hidden_least_privileged_and_self_restarting(tmp_path):
     from mailorganizer.windows_task import build_task_xml
     root=tmp_path / "project"

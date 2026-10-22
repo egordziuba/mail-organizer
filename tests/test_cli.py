@@ -13,7 +13,7 @@ def test_cli_help_lists_readonly_commands_and_no_send_or_calendar_writer(capsys)
     assert "create-event" not in output
 
 
-def test_export_paths_cannot_overwrite_archived_sources(tmp_path):
+def test_export_paths_cannot_overwrite_archived_sources(archive_command_lock, tmp_path):
     from mailorganizer.cli import main
     from mailorganizer.archive import Archive
     folder = tmp_path / "demo"
@@ -31,7 +31,7 @@ def test_export_paths_cannot_overwrite_archived_sources(tmp_path):
 
 
 
-def test_demo_refuses_unlabelled_existing_data(tmp_path):
+def test_demo_refuses_unlabelled_existing_data(archive_command_lock, tmp_path):
     from mailorganizer.cli import main
     folder = tmp_path / "existing"
     folder.mkdir()
@@ -43,7 +43,7 @@ def test_demo_refuses_unlabelled_existing_data(tmp_path):
 
 
 
-def test_sync_is_readonly_capped_and_rejects_duplicate_accounts(monkeypatch, tmp_path, capsys):
+def test_sync_is_readonly_capped_and_rejects_duplicate_accounts(archive_command_lock, monkeypatch, tmp_path, capsys):
     import json
     from mailorganizer import auth, connectors
     from mailorganizer.cli import main
@@ -93,7 +93,7 @@ def test_status_is_not_a_live_verification(monkeypatch, capsys):
 
 
 
-def test_model_batch_validation_is_atomic_and_never_authorizes_calendar(tmp_path):
+def test_model_batch_validation_is_atomic_and_never_authorizes_calendar(archive_command_lock, tmp_path):
     import json
     from mailorganizer.cli import main
     folder = tmp_path / "demo"
@@ -116,7 +116,7 @@ def test_model_batch_validation_is_atomic_and_never_authorizes_calendar(tmp_path
 
 
 
-def test_demo_is_repeatable_and_separate_from_real_archive(tmp_path):
+def test_demo_is_repeatable_and_separate_from_real_archive(archive_command_lock, tmp_path):
     import json
     from mailorganizer.cli import main
     folder = tmp_path / "demo"
@@ -133,7 +133,7 @@ def test_demo_is_repeatable_and_separate_from_real_archive(tmp_path):
 
 
 
-def test_import_eml_archives_and_reports_without_changing_source(tmp_path):
+def test_import_eml_archives_and_reports_without_changing_source(archive_command_lock, tmp_path):
     from email.message import EmailMessage
     from mailorganizer.cli import main
     source = tmp_path / "SYNTHETIC.eml"

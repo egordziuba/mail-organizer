@@ -1,7 +1,10 @@
+from conftest import windows_only
+
 import ctypes,json,threading,time
 from ctypes import wintypes
 
 
+@windows_only
 def test_status_replace_tolerates_a_brief_windows_reader_lock(tmp_path):
     from mailorganizer.cli import _write_json
     file=tmp_path / "worker.json"

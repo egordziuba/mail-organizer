@@ -1,8 +1,11 @@
+from conftest import windows_only
+
 import os,subprocess,struct
 from pathlib import Path
 import pytest
 
 
+@windows_only
 def test_hidden_command_uses_gui_base_interpreter_and_explicit_bootstrap():
     from mailorganizer.launching import project_command
     command=project_command("mailorganizer.runtime",["status","--config","runtime.json"],console=False)
@@ -13,6 +16,7 @@ def test_hidden_command_uses_gui_base_interpreter_and_explicit_bootstrap():
     with pytest.raises(ValueError):project_command("os",[],console=False)
 
 
+@windows_only
 def test_bootstrap_imports_project_without_hermes_pythonpath():
     from mailorganizer.launching import project_command
     env=dict(os.environ);env.pop("PYTHONPATH",None);env.pop("PYTHONHOME",None)

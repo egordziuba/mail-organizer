@@ -1,8 +1,11 @@
+from conftest import windows_only
+
 import subprocess,sys,time
 from pathlib import Path
 import pytest
 
 
+@windows_only
 def test_timeout_terminates_owned_descendants_not_only_launcher(tmp_path):
     from mailorganizer.runtime import _runner,_birth
     marker,stop=tmp_path / "child.pid",tmp_path / "stop"

@@ -1,7 +1,7 @@
 import json,sys,types,subprocess
 
 
-def test_cli_uses_resumable_gmail_engine_not_pilot(monkeypatch,tmp_path,capsys):
+def test_cli_uses_resumable_gmail_engine_not_pilot(archive_command_lock, monkeypatch,tmp_path,capsys):
     from mailorganizer.cli import main
     from mailorganizer import auth,connectors
     module=types.ModuleType("mailorganizer.gmail_sync")
@@ -21,7 +21,7 @@ def test_cli_uses_resumable_gmail_engine_not_pilot(monkeypatch,tmp_path,capsys):
     assert result["full_mailbox_verified"] is False
 
 
-def test_runtime_keeps_backfill_progress_and_uses_incremental_command(tmp_path):
+def test_runtime_keeps_backfill_progress_and_uses_incremental_command(synthetic_base_interpreter, tmp_path):
     from mailorganizer.runtime import init_config,run_once
     config=tmp_path/"runtime.json";init_config(config,tmp_path/"archive",tmp_path/"state")
     def runner(command,timeout):

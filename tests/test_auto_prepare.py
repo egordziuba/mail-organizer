@@ -1,7 +1,7 @@
 import json,subprocess
 
 
-def test_runtime_prepares_local_outputs_only_when_enabled_and_due(tmp_path):
+def test_runtime_prepares_local_outputs_only_when_enabled_and_due(synthetic_base_interpreter, tmp_path):
     from mailorganizer.runtime import init_config,run_once
     config=tmp_path/"runtime.json";init_config(config,tmp_path/"archive",tmp_path/"state")
     cfg=json.loads(config.read_text());cfg["auto_prepare"]=True;cfg["preparation_interval_seconds"]=900;config.write_text(json.dumps(cfg))

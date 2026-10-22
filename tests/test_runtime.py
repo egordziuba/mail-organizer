@@ -1,9 +1,11 @@
+from conftest import windows_only
+
 import json
 import subprocess
 import pytest
 
 
-def test_config_and_cycle_are_durable_and_account_errors_are_isolated(tmp_path):
+def test_config_and_cycle_are_durable_and_account_errors_are_isolated(synthetic_base_interpreter, tmp_path):
     from mailorganizer.runtime import init_config, run_once, load_config
     config = tmp_path / "runtime.json"
     init_config(config, tmp_path / "archive", tmp_path / "state")
@@ -26,7 +28,7 @@ def test_config_and_cycle_are_durable_and_account_errors_are_isolated(tmp_path):
     assert cycle["calendar_modified"] is False
 
 
-def test_background_pause_skips_remaining_accounts(tmp_path):
+def test_background_pause_skips_remaining_accounts(synthetic_base_interpreter, tmp_path):
     from mailorganizer import runtime
     config=tmp_path / "runtime.json"
     runtime.init_config(config,tmp_path / "archive",tmp_path / "state")
@@ -42,6 +44,7 @@ def test_background_pause_skips_remaining_accounts(tmp_path):
     assert result["accounts"]["outlook-1"]["state"] == "paused"
 
 
+@windows_only
 def test_start_prefers_matching_windows_task_without_direct_spawn(tmp_path,monkeypatch):
     from mailorganizer import runtime
     config=tmp_path / "runtime.json"
@@ -56,6 +59,7 @@ def test_start_prefers_matching_windows_task_without_direct_spawn(tmp_path,monke
 
 
 
+@windows_only
 def test_crashed_hidden_process_releases_lock_and_can_be_raised(tmp_path):
     import time,sys,os
     from mailorganizer import runtime
@@ -84,6 +88,7 @@ def test_crashed_hidden_process_releases_lock_and_can_be_raised(tmp_path):
 
 
 
+@windows_only
 def test_hidden_worker_start_duplicate_stop_and_resume(tmp_path):
     from mailorganizer.runtime import init_config, start_worker, stop_worker, worker_status
     config=tmp_path / "runtime.json"
@@ -113,6 +118,7 @@ def test_hidden_worker_start_duplicate_stop_and_resume(tmp_path):
 
 
 
+@windows_only
 def test_single_instance_lock_releases_without_stale_file(tmp_path):
     from mailorganizer.runtime import NamedMutex, WorkerBusy
     identity = tmp_path / "synthetic-runtime"
